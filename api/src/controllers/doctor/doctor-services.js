@@ -1,4 +1,4 @@
-module.exports = function makeDeleteDoctor({ removeDoctor }) {
+const makeDeleteDoctor = function ({ removeDoctor }) {
     return async function deleteDoctor(httpRequest) {
         const headers = {
             'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ module.exports = function makeDeleteDoctor({ removeDoctor }) {
     }
 }
 
-module.exports = function makeGetDoctors({ listDoctors }) {
+const makeGetDoctors = function ({ listDoctors }) {
     return async function getDoctors(httpRequest) {
         const headers = {
             'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ module.exports = function makeGetDoctors({ listDoctors }) {
     }
 }
 
-module.exports = function makeEditDoctor({ editDoctor }) {
+const makeEditDoctor = function ({ editDoctor }) {
     return async function postEditDoctor(httpRequest) {
         try {
             const { ...doctorInfo } = httpRequest.body;
@@ -84,7 +84,7 @@ module.exports = function makeEditDoctor({ editDoctor }) {
 }
 
 
-module.exports = function makeAddDoctor({ addDoctor }) {
+const makeAddDoctor = function ({ addDoctor }) {
     return async function postAddDoctor(httpRequest) {
         try {
             const { ...doctorInfo } = httpRequest.body
@@ -113,3 +113,5 @@ module.exports = function makeAddDoctor({ addDoctor }) {
         }
     }
 }
+
+module.exports = { makeDeleteDoctor, makeGetDoctors, makeEditDoctor, makeAddDoctor };

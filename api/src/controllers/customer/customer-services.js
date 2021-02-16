@@ -1,4 +1,4 @@
-module.exports = function makeDeleteCustomer({ removeCustomer }) {
+const makeDeleteCustomer = function ({ removeCustomer }) {
     return async function deleteCustomer(httpRequest) {
         const headers = {
             'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ module.exports = function makeDeleteCustomer({ removeCustomer }) {
     }
 }
 
-module.exports = function makeGetCustomers({ listCustomers }) {
+const makeGetCustomers = function ({ listCustomers }) {
     return async function getCustomers(httpRequest) {
         const headers = {
             'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ module.exports = function makeGetCustomers({ listCustomers }) {
     }
 }
 
-module.exports = function makeEditCustomer({ editCustomer }) {
+const makeEditCustomer = function ({ editCustomer }) {
     return async function postEditCustomer(httpRequest) {
         try {
             const { ...customerInfo } = httpRequest.body;
@@ -84,7 +84,7 @@ module.exports = function makeEditCustomer({ editCustomer }) {
 }
 
 
-module.exports = function makeAddCustomer({ addCustomer }) {
+const makeAddCustomer = function ({ addCustomer }) {
     return async function postAddCustomer(httpRequest) {
         try {
             const { ...customerInfo } = httpRequest.body
@@ -113,3 +113,4 @@ module.exports = function makeAddCustomer({ addCustomer }) {
         }
     }
 }
+

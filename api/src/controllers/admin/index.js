@@ -3,18 +3,18 @@ const adminSubControllersFactory = require('./admin-services');
 
 
 const deleteAdmin = adminSubControllersFactory.makeDeleteAdmin({ removeAdmin });
-const getAdmin = adminSubControllersFactory.makeGetAdmins({ listAdmins });
+const getAdmins = adminSubControllersFactory.makeGetAdmins({ listAdmins });
 const postAddAdmin = adminSubControllersFactory.makeAddAdmin({ addAdmin });
 const postEditAdmin = adminSubControllersFactory.makeEditAdmin({ editAdmin });
 
 const adminControllers = {
     deleteAdmin,
-    getAdmin,
+    getAdmins,
     postAddAdmin,
     postEditAdmin
 };
 
-module.exports = { adminControllers, deleteAdmin, getAdmin, postAddAdmin, postEditAdmin };
+module.exports = { adminControllers, deleteAdmin, getAdmins, postAddAdmin, postEditAdmin };
 
 
 
