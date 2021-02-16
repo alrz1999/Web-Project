@@ -15,4 +15,4 @@ const doctorService = Object.freeze({
     removeDoctor
 });
 
-module.exports = doctorService, { addDoctor, editDoctor, listDoctors, removeDoctor };
+module.exports = { doctorService, addDoctor, editDoctor, listDoctors, removeDoctor };

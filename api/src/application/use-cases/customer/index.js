@@ -15,4 +15,4 @@ const customerService = Object.freeze({
     removeCustomer
 });
 
-module.exports = customerService, { addCustomer, editCustomer, listCustomers, removeCustomer };
+module.exports = { customerService, addCustomer, editCustomer, listCustomers, removeCustomer };

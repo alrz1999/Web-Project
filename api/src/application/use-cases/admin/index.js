@@ -15,4 +15,4 @@ const adminService = Object.freeze({
     removeAdmin
 });
 
-module.exports = adminService, { addAdmin, editAdmin, listAdmins, removeAdmin };
+module.exports = { adminService, addAdmin, editAdmin, listAdmins, removeAdmin };
