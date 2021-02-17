@@ -114,3 +114,4 @@ const makeAddCustomer = function ({ addCustomer }) {
     }
 }
 
+module.exports = { makeAddCustomer, makeDeleteCustomer, makeEditCustomer, makeGetCustomers };

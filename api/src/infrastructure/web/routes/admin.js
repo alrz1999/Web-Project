@@ -9,7 +9,7 @@ const adminsRouter = () => {
     // load controller with dependencies
     router.route('/')
         .get(makeCallBack(controller.getAdmins))
-        .postmakeCallBack((makeCallBack(controller.postAddAdmin)));
+        .post((makeCallBack(controller.postAddAdmin)));
     router.route('/:adminId')
         .get(makeCallBack(controller.getAdmin))
         .post(makeCallBack(controller.postEditAdmin));

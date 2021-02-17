@@ -3,6 +3,8 @@ const makeDeleteCustomer = require('./delete-customer');
 const makeEditCustomer = require('./edit-customer');
 const makeListCustomers = require('./list-customers');
 
+const customersDb = require('../../../data-access/customer');
+
 const addCustomer = makeAddCustomer({ customersDb });
 const editCustomer = makeEditCustomer({ customersDb });
 const listCustomers = makeListCustomers({ customersDb });

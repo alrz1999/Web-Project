@@ -1,6 +1,6 @@
 const Doctor = require("./doctor")
 
-module.exports = function doctorFactory({ db, sanitize }) {
+module.exports = function doctorFactory(db, sanitize) {
     return function createDoctor({ firstName, lastName, email, phoneNumber, password, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')

@@ -9,7 +9,7 @@ const doctorsRouter = () => {
     // load controller with dependencies
     router.route('/')
         .get(makeCallBack(controller.getDoctors))
-        .postmakeCallBack((makeCallBack(controller.postAddDoctor)));
+        .post((makeCallBack(controller.postAddDoctor)));
     router.route('/:doctorId')
         .get(makeCallBack(controller.getDoctor))
         .post(makeCallBack(controller.postEditDoctor));

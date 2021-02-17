@@ -11,16 +11,16 @@ module.exports = function makeDoctorsDb() {
     });
 
     async function findAll() {
-        const Customer = Parse.Object.extend("Customer");
-        const query = new Parse.Query(Customer);
+        const Doctor = Parse.Object.extend("Doctor");
+        const query = new Parse.Query(Doctor);
         // query.equalTo("playerName", "Dan Stemkoski");
         const results = await query.find();
         return (await result.toArray());
     }
 
     async function findById({ id }) {
-        const Customer = Parse.Object.extend("Customer");
-        const query = new Parse.Query(Customer);
+        const Doctor = Parse.Object.extend("Doctor");
+        const query = new Parse.Query(Doctor);
         query.equalTo("id", id);
         const result = await query.find();
         const found = await result.toArray();
@@ -32,8 +32,8 @@ module.exports = function makeDoctorsDb() {
     }
 
     async function findByEmail({ email }) {
-        const Customer = Parse.Object.extend("Customer");
-        const query = new Parse.Query(Customer);
+        const Doctor = Parse.Object.extend("Doctor");
+        const query = new Parse.Query(Doctor);
         query.equalTo("email", email);
         const result = await query.find();
         const found = await result.toArray();
@@ -44,7 +44,7 @@ module.exports = function makeDoctorsDb() {
         return { _id, ...info };
     }
 
-    async function insert({ customer }) {
+    async function insert({ doctor }) {
         const db = await makeDb()
         const result = await db
             .collection('doctors')

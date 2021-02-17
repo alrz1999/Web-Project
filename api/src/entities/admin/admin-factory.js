@@ -1,6 +1,6 @@
 const Admin = require("./admin")
 
-module.exports = function adminFactory({ db, sanitize }) {
+module.exports = function adminFactory(db, sanitize) {
     return function createAdmin({ firstName, lastName, email, phoneNumber, password, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')

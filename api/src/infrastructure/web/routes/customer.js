@@ -9,7 +9,7 @@ const customersRouter = () => {
     // load controller with dependencies
     router.route('/')
         .get(makeCallBack(controller.getCustomers))
-        .postmakeCallBack((makeCallBack(controller.postAddCustomer)));
+        .post((makeCallBack(controller.postAddCustomer)));
     router.route('/:customerId')
         .get(makeCallBack(controller.getCustomer))
         .post(makeCallBack(controller.postEditCustomer));

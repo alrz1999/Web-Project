@@ -1,6 +1,6 @@
 const Customer = require("./customer")
 
-module.exports = function customerFactory({ db, sanitize }) {
+module.exports = function customerFactory(customersDb ) {
     return function createCustomer({ firstName, lastName, email, phoneNumber, password, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')

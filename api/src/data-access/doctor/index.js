@@ -1,7 +1,7 @@
 const makeDoctorsDbInterface = require('./doctors-db');
-const makeDoctorsDbMongo = require('../../infrastructure/database/mongodb/doctor');
+const makeDoctorsDbMongo = require('../../infrastructure/database/parse-server/doctor/doctors-db');
 
-module.exports =  async function makeDb () {
+const makeDb = async function () {
   const db = await makeDoctorsDbMongo();
   return db;
 }

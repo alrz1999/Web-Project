@@ -3,6 +3,8 @@ const makeDeleteAdmin = require('./delete-admin');
 const makeEditAdmin = require('./edit-admin');
 const makeListAdmins = require('./list-admins');
 
+const adminsDb = require('../../../data-access/admin');
+
 const addAdmin = makeAddAdmin({ adminsDb });
 const editAdmin = makeEditAdmin({ adminsDb });
 const listAdmins = makeListAdmins({ adminsDb });
