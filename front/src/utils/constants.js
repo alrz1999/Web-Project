@@ -17,4 +17,6 @@ const PATH = {
   DOCTER_APPOINTMENT: "/doctor/appointment/:id",
 };
 
-export { LOCAL_STORAGE, AUTH_ACTION_TYPE, PATH };
+const FONT_FAMILY = ["Sahel", "Samim", "Shabnam"].join(",");
+
+export { LOCAL_STORAGE, AUTH_ACTION_TYPE, PATH, FONT_FAMILY };
