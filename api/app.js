@@ -7,9 +7,6 @@ const logger = require('morgan');
 const cors = require("cors");
 const routes = require('./src/infrastructure/web/routes');
 
-const Parse = require('parse/node');
-Parse.initialize("myAppId");
-Parse.serverURL = 'http://localhost:1337/parse'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
