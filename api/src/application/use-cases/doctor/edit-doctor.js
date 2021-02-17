@@ -1,7 +1,6 @@
 const createNewDoctor = require('../../../entities/doctor')
-module.exports = function makeEditDoctor({ customerDb: doctorDb }) {
+module.exports = function makeEditDoctor({  doctorsDb }) {
     return async function editDoctor(id, ...changes) {
-        const doctor = createNewDoctor(doctorInfo);
-        const exists = await doctorDb.find();
+        const result = await doctorsDb.update({id, changes});
     }
 }

@@ -88,7 +88,7 @@ module.exports = function makeCustomersDb() {
         return result;
     };
 
-    async function remove() {
+    async function remove(id) {
         const query = new Parse.Query(CustomerUser);
         query.equalTo("role", "customer");
         query.equalTo("id", id);

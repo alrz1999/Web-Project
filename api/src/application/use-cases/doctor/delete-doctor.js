@@ -1,7 +1,8 @@
 const createNewDoctor = require('../../../entities/doctor')
-module.exports = function makeDeleteDoctor({ customerDb: doctorDb }) {
-    return async function deleteDoctor({ id }) {
+module.exports = function makeDeleteDoctor({ doctorsDb }) {
+    return async function deleteDoctor(id) {
         const doctor = createNewDoctor(doctorInfo);
-        const exists = await doctorDb.find();
+        const result = await doctorsDb.renove(id);
+        return result;
     }
 }

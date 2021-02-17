@@ -1,8 +1,8 @@
 const makeCustomersDbInterface = require('./customers-db');
-const makeCustomersDbMongo = require('../../infrastructure/database/parse-server/customer/customers-db');
+const makeCustomersDb_parse = require('../../infrastructure/database/parse-server/customer/customers-db');
 
 const makeDb = async function () {
-    const db = await makeCustomersDbMongo();
+    const db = await makeCustomersDb_parse();
     return db;
 }
 

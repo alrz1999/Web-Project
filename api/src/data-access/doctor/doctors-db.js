@@ -3,6 +3,7 @@ module.exports = function makeDoctorsDb({ makeDb }) {
         findAll,
         findById,
         findByEmail,
+        findByPhoneNumber,
         insert,
         remove,
         update
@@ -10,53 +11,43 @@ module.exports = function makeDoctorsDb({ makeDb }) {
 
     async function findAll() {
         const db = await makeDb();
-        const query = {};
-        const result = await db.findAll(query);
-        return (await result.toArray()).map(({ ...found }) => ({
-            ...found
-        }));
+        const result = await db.findAll();
+        return result;
     }
 
     async function findById(id) {
         const db = await makeDb();
         const result = await db.findById(id);
-        const found = await result.toArray();
-        if (found.length === 0) {
-            return null
-        }
-        const { ...info } = found[0];
-        return { ...info };
+        return result;
     }
 
     async function findByEmail(email) {
         const db = await makeDb();
-        const query = { email };
-        const result = await db.findByEmail(query);
-        return (await result.toArray()).map(({ ...found }) => ({
-            ...found
-        }));
+        const result = await db.findByEmail(email);
+        return result;
     }
 
-    async function insert(id, ...doctorInfo) {
-        const db = await makeDb()
-        const result = await db
-            .collection('doctors')
-            .insertOne({ id, ...doctorInfo })
-        const { ...insertedInfo } = result.ops[0]
-        return { ...insertedInfo }
+    async function findByPhoneNumber(phoneNumber) {
+        const db = await makeDb();
+        const result = await db.findByPhoneNumber(phoneNumber);
+        return result;
     }
 
-    async function update(id, ...doctorInfo) {
+    async function insert(doctor) {
+        const db = await makeDb();
+        const result = await db.insert(doctor);
+        return result;
+    }
+
+    async function update({ id, ...doctorInfo }) {
         const db = await makeDb()
-        const result = await db
-            .collection('doctors')
-            .updateOne({ id }, { $set: { ...doctorInfo } })
-        return result.modifiedCount > 0 ? { id, ...doctorInfo } : null
+        const result = await db.update(id, { ...doctorInfo })
+        return result;
     }
 
     async function remove(id) {
-        const db = await makeDb()
-        const result = await db.collection('doctors').deleteOne({ id })
-        return result.deletedCount
+        const db = await makeDb();
+        const result = await db.remove(id);
+        return result;
     }
 }   

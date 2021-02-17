@@ -3,6 +3,7 @@ module.exports = function makeCustomersDb({ makeDb }) {
         findAll,
         findById,
         findByEmail,
+        findByPhoneNumber,
         insert,
         remove,
         update
@@ -22,23 +23,29 @@ module.exports = function makeCustomersDb({ makeDb }) {
 
     async function findByEmail(email) {
         const db = await makeDb();
-        const result = await db.findByEmail({ email });
+        const result = await db.findByEmail(email);
         return result;
     }
 
-    async function insert({ ...customerInfo }) {
+    async function findByPhoneNumber(phoneNumber) {
         const db = await makeDb();
-        const result = await db.insert({ ...customerInfo });
+        const result = await db.findByPhoneNumber(phoneNumber);
+        return result;
+    }
+
+    async function insert(customer) {
+        const db = await makeDb();
+        const result = await db.insert(customer);
         return result;
     }
 
     async function update({ id, ...customerInfo }) {
         const db = await makeDb()
         const result = await db.update(id, { ...customerInfo })
-        return result.modifiedCount > 0 ? { id, ...customerInfo } : null
+        return result;
     }
 
-    async function remove({ id }) {
+    async function remove(id) {
         const db = await makeDb();
         const result = await db.remove(id);
         return result;
