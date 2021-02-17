@@ -1,5 +1,5 @@
 import React from "react";
-import CustomAppBar from "./pages/AppBar";
+import CustomAppBar from "./components/AppBar";
 import MainRouter from "./pages/MainRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
