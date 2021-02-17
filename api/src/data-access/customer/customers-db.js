@@ -43,7 +43,7 @@ module.exports = function makeCustomersDb({ makeDb }) {
 
     async function update({ id, ...customerInfo }) {
         const db = await makeDb()
-        const result = await db.update(id, { ...customerInfo })
+        const result = await db.update({ id, customerInfo })
         return result;
     }
 
@@ -61,7 +61,7 @@ module.exports = function makeCustomersDb({ makeDb }) {
 
     async function logout({ ...logoutInfo }) {
         const db = await makeDb();
-        const result = await db.logout(logoutInfo);
+        const result = await db.logout({ logoutInfo });
         return result;
     }
 }   

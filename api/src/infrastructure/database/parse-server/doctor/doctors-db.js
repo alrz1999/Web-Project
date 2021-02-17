@@ -153,6 +153,17 @@ module.exports = function makeDoctorsDb() {
         return convertToDoctorEntity(result[0]);
     };
 
+    async function login({ ...loginInfo }) {
+        const { username, password } = loginInfo;
+        const user = await Parse.User.logIn(username, password);
+        return convertToCustomerEntity(user);
+    };
+
+    async function logout({ ...logoutInfo }) {
+        const user = await Parse.User.logOut()
+        return user;
+    };
+
 
     function convertToDoctorEntity(doctorDTO) {
         return new Doctor(

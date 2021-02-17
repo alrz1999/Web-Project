@@ -131,6 +131,17 @@ module.exports = function makeAdminsDb() {
         return exists;
     };
 
+    async function login({ ...loginInfo }) {
+        const { username, password } = loginInfo;
+        const user = await Parse.User.logIn(username, password);
+        return convertToCustomerEntity(user);
+    };
+
+    async function logout({ ...logoutInfo }) {
+        const user = await Parse.User.logOut()
+        return user;
+    };
+
 
     function convertToAdminEntity(adminDTO) {
         return new Admin(

@@ -43,7 +43,7 @@ module.exports = function makeDoctorsDb({ makeDb }) {
 
     async function update({ id, ...doctorInfo }) {
         const db = await makeDb()
-        const result = await db.update(id, { ...doctorInfo })
+        const result = await db.update({ id, doctorInfo })
         return result;
     }
 
@@ -55,13 +55,13 @@ module.exports = function makeDoctorsDb({ makeDb }) {
 
     async function login({ ...loginInfo }) {
         const db = await makeDb();
-        const result = await db.login(loginInfo);
+        const result = await db.login({ loginInfo });
         return result;
     }
 
     async function logout({ ...logoutInfo }) {
         const db = await makeDb();
-        const result = await db.logout(logoutInfo);
+        const result = await db.logout({ logoutInfo });
         return result;
     }
 }   

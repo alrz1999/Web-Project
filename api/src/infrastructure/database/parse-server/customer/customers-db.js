@@ -138,24 +138,8 @@ module.exports = function makeCustomersDb() {
     };
 
     async function logout({ ...logoutInfo }) {
-        const user = new CustomerUser();
-        username = customer.username ? customer.username : customer.email;
-
-        user.set("username", username);
-        user.set("password", customer.password);
-        user.set("email", customer.email);
-        user.set("role", "customer");
-        user.set("firstName", customer.firstName);
-        user.set("lastName", customer.lastName);
-        user.set("phoneNumber", customer.phoneNumber);
-
-        try {
-            await user.signUp();
-            return user;
-        } catch (error) {
-            console.log("Error: " + error.code + " " + error.message);
-            throw error;
-        }
+        const user = await Parse.User.logOut()
+        return user;
     };
 
     function convertToCustomerEntity(customerDTO) {

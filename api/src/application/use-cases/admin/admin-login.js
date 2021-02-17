@@ -6,8 +6,8 @@ module.exports = function makeAdminLogin({ adminsDb, authService }) {
             throw new Error('access denied.');
         };
 
-        const admin = await adminsDb.login(username, password);
-        const token = authService.generateToKen(admin.username, admin.role);
+        const admin = await adminsDb.login({username, password});
+        const token = authService.generateToken(admin.username, admin.role);
 
         return token;
     }

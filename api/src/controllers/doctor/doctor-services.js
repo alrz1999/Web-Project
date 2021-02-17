@@ -148,7 +148,7 @@ const makeLoginDoctor = function ({ doctorLogin }) {
         };
         try {
             const { phoneNumber, password } = httpRequest.body;
-            const token = await doctorLogin(phoneNumber, password);
+            const token = await doctorLogin({ phoneNumber, password });
             return {
                 headers,
                 statusCode: 200,

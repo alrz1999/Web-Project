@@ -147,8 +147,8 @@ const makeLoginCustomer = function ({ customerLogin }) {
             'Content-Type': 'application/json'
         };
         try {
-            const { phoneNumber, password } = httpRequest.body;
-            const token = await customerLogin(phoneNumber, password);
+            
+            const token = await customerLogin(httpRequest.body);
             return {
                 headers,
                 statusCode: 200,

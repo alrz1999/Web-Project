@@ -148,7 +148,7 @@ const makeLoginAdmin = function ({ adminLogin }) {
         };
         try {
             const { phoneNumber, password } = httpRequest.body;
-            const token = await adminLogin(phoneNumber, password);
+            const token = await adminLogin({phoneNumber, password});
             return {
                 headers,
                 statusCode: 200,
