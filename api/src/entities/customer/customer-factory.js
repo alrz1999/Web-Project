@@ -1,7 +1,7 @@
 const Customer = require("./customer")
 
-module.exports = function customerFactory(customersDb ) {
-    return function createCustomer({ firstName, lastName, email, phoneNumber, password, id } = {}) {
+module.exports = function customerFactory(customersDb) {
+    return function createCustomer({ firstName, lastName, username, email, phoneNumber, password, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')
         }
@@ -18,11 +18,6 @@ module.exports = function customerFactory(customersDb ) {
             throw new Error("Password must be longer than 4 characters.")
         }
 
-        return Customer({
-            getFirstName: () => firstName,
-            getLastName: () => lastName,
-            getEmail: () => email,
-            getId: () => id,
-        })
+        return new Customer(firstName, lastName, username, email, phoneNumber, password);
     }
 }

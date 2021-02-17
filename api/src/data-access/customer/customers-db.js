@@ -14,33 +14,33 @@ module.exports = function makeCustomersDb({ makeDb }) {
         return result;
     }
 
-    async function findById({ id }) {
+    async function findById(id) {
         const db = await makeDb();
         const result = await db.findById(id);
         return result;
     }
 
-    async function findByEmail({ email }) {
+    async function findByEmail(email) {
         const db = await makeDb();
         const result = await db.findByEmail({ email });
         return result;
     }
 
-    async function insert({ id: _id = Id.makeId(), ...customerInfo }) {
+    async function insert({ ...customerInfo }) {
         const db = await makeDb();
-        const result = await db.insert({ _id, ...customerInfo });
+        const result = await db.insert({ ...customerInfo });
         return result;
     }
 
-    async function update({ id: _id, ...customerInfo }) {
+    async function update({ id, ...customerInfo }) {
         const db = await makeDb()
-        const result = await db.update({ _id }, { $set: { ...customerInfo } })
-        return result.modifiedCount > 0 ? { id: _id, ...customerInfo } : null
+        const result = await db.update(id, { ...customerInfo })
+        return result.modifiedCount > 0 ? { id, ...customerInfo } : null
     }
 
-    async function remove({ id: _id }) {
+    async function remove({ id }) {
         const db = await makeDb();
-        const result = await db.remove(_id);
+        const result = await db.remove(id);
         return result;
     }
 }   

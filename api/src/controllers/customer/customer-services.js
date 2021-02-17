@@ -30,7 +30,7 @@ const makeGetCustomers = function ({ listCustomers }) {
             'Content-Type': 'application/json'
         };
         try {
-            const customers = await listCustomers({})
+            const customers = await listCustomers()
             return {
                 headers,
                 statusCode: 200,

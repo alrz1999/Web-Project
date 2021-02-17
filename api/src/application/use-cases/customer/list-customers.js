@@ -1,7 +1,8 @@
 const createNewCustomer = require('../../../entities/customer')
-module.exports = function makeListCustomers({ customerDb }) {
+module.exports = function makeListCustomers({ customersDb }) {
     return async function listCustomers() {
-        const customer = createNewCustomer(customerInfo);
-        const exists = await customerDb.find();
+        let result = await customersDb.findAll();
+        console.log(result);
+        return result;
     }
 }
