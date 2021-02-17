@@ -5,8 +5,9 @@ module.exports = function makeCustomerLogin({ customersDb, authService }) {
         if (role && role != 'customer') {
             throw new Error('access denied.');
         };
-        const customer = await customersDb.login({email, password});
-        const token = authService.generateToken(customer.username, customer.role);
+        const customer = await customersDb.login({ email, password });
+        const { id } = customer;
+        const token = authService.generateToken({ role, id });
 
         return token;
     }

@@ -12,12 +12,12 @@ module.exports = function makeCustomersDb() {
         remove,
         update,
         login,
-        logout
+        logout,
+        exists
     });
 
     async function findAll() {
         const query = new Parse.Query(CustomerUser);
-        // query.equalTo("playerName", "Dan Stemkoski");
         query.equalTo("role", "customer");
         const resultDTO = await query.find();
         const customers = resultDTO.map(convertToCustomerEntity);
@@ -70,7 +70,7 @@ module.exports = function makeCustomersDb() {
 
         try {
             await user.signUp();
-            return user;
+            return convertToCustomerEntity(user);
         } catch (error) {
             console.log("Error: " + error.code + " " + error.message);
             throw error;
@@ -86,7 +86,7 @@ module.exports = function makeCustomersDb() {
         if (newCustomerInfo.password)
             result.setPassword(password);
 
-        return result;
+        return convertToCustomerEntity(result);
     };
 
     async function remove(id) {
@@ -101,15 +101,8 @@ module.exports = function makeCustomersDb() {
         });
     };
 
-    async function exists({ username, email, phoneNumber }) {
+    async function exists({ email, phoneNumber }) {
         let exists = false;
-        if (username) {
-            const query = new Parse.Query(CustomerUser);
-            query.equalTo("role", "customer");
-            query.equalTo('username', username);
-            let result = await query.first();
-            exists = result ? true : exists;
-        }
 
         if (email) {
             const query = new Parse.Query(CustomerUser);
@@ -133,6 +126,10 @@ module.exports = function makeCustomersDb() {
     async function login({ ...loginInfo }) {
         const { email, password } = loginInfo;
         const user = await Parse.User.logIn(email, password);
+        if (user.get('role') != 'customer') {
+            await user.logout();
+            throw new Error("access denied.")
+        }
         return convertToCustomerEntity(user);
     };
 
@@ -146,7 +143,6 @@ module.exports = function makeCustomersDb() {
             customerDTO.get('firstName'),
             customerDTO.get('lastName'),
             customerDTO.get('username'),
-            customerDTO.email,
             customerDTO.get('phoneNumber'),
             customerDTO.get("password"),
             customerDTO.id,

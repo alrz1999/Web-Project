@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+const apm = require('../src/infrastructure/monitoring/apm-client')();
 var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');

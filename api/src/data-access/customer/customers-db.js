@@ -8,7 +8,8 @@ module.exports = function makeCustomersDb({ makeDb }) {
         remove,
         update,
         login,
-        logout
+        logout,
+        exists
     });
 
     async function findAll() {
@@ -61,7 +62,13 @@ module.exports = function makeCustomersDb({ makeDb }) {
 
     async function logout({ ...logoutInfo }) {
         const db = await makeDb();
-        const result = await db.logout({ logoutInfo });
+        const result = await db.logout(logoutInfo);
+        return result;
+    }
+
+    async function exists({ email, phoneNumber }) {
+        const db = await makeDb();
+        const result = await db.login({ email, phoneNumber });
         return result;
     }
 }   

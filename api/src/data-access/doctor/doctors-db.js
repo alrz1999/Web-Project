@@ -8,7 +8,8 @@ module.exports = function makeDoctorsDb({ makeDb }) {
         remove,
         update,
         login,
-        logout
+        logout,
+        exists
     });
 
     async function findAll() {
@@ -55,13 +56,19 @@ module.exports = function makeDoctorsDb({ makeDb }) {
 
     async function login({ ...loginInfo }) {
         const db = await makeDb();
-        const result = await db.login({ loginInfo });
+        const result = await db.login(loginInfo);
         return result;
     }
 
     async function logout({ ...logoutInfo }) {
         const db = await makeDb();
-        const result = await db.logout({ logoutInfo });
+        const result = await db.logout(logoutInfo);
+        return result;
+    }
+
+    async function exists({ email, phoneNumber, medicalNumber }) {
+        const db = await makeDb();
+        const result = await db.login({ email, phoneNumber, medicalNumber });
         return result;
     }
 }   
