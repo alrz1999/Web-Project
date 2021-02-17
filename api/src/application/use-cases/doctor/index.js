@@ -13,7 +13,7 @@ const addDoctor = makeAddDoctor({ doctorsDb });
 const editDoctor = makeEditDoctor({ doctorsDb });
 const listDoctors = makeListDoctors({ doctorsDb });
 const removeDoctor = makeDeleteDoctor({ doctorsDb });
-const getDoctor = makeGetDoctor({ doctorsDb });
+const getDoctorById = makeGetDoctor({ doctorsDb });
 const doctorLogin = makeDoctorLogin({ doctorsDb, authService });
 
 const doctorService = Object.freeze({
@@ -21,8 +21,8 @@ const doctorService = Object.freeze({
     editDoctor,
     listDoctors,
     removeDoctor,
-    getDoctor,
+    getDoctorById,
     doctorLogin
 });
 
-module.exports = { doctorService, addDoctor, editDoctor, listDoctors, removeDoctor, getDoctor, doctorLogin };
+module.exports = { doctorService, addDoctor, editDoctor, listDoctors, removeDoctor, getDoctorById, doctorLogin };

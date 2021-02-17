@@ -13,7 +13,7 @@ const addCustomer = makeAddCustomer({ customersDb });
 const editCustomer = makeEditCustomer({ customersDb });
 const listCustomers = makeListCustomers({ customersDb });
 const removeCustomer = makeDeleteCustomer({ customersDb });
-const getCustomer = makeGetCustomer({ customersDb });
+const getCustomerById = makeGetCustomer({ customersDb });
 const customerLogin = makeCustomerLogin({ customersDb, authService });
 
 const customerService = Object.freeze({
@@ -21,8 +21,8 @@ const customerService = Object.freeze({
     editCustomer,
     listCustomers,
     removeCustomer,
-    getCustomer,
+    getCustomerById,
     customerLogin
 });
 
-module.exports = { customerService, addCustomer, editCustomer, listCustomers, removeCustomer, getCustomer, customerLogin };
+module.exports = { customerService, addCustomer, editCustomer, listCustomers, removeCustomer, getCustomerById, customerLogin };

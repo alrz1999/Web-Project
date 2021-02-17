@@ -114,14 +114,14 @@ const makeAddCustomer = function ({ addCustomer }) {
     }
 }
 
-const makeGetCustomer = function ({ getCustomer }) {
+const makeGetCustomer = function ({ getCustomer: getCustomerById }) {
     return async function getCustomerById(httpRequest) {
         const headers = {
             'Content-Type': 'application/json'
         };
         try {
             const { id } = httpRequest.body;
-            const customer = await getCustomer(id)
+            const customer = await getCustomerById(id)
             return {
                 headers,
                 statusCode: 200,

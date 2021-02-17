@@ -13,7 +13,7 @@ const addAdmin = makeAddAdmin({ adminsDb });
 const editAdmin = makeEditAdmin({ adminsDb });
 const listAdmins = makeListAdmins({ adminsDb });
 const removeAdmin = makeDeleteAdmin({ adminsDb });
-const getAdmin = makeGetAdmin({ adminsDb });
+const getAdminById = makeGetAdmin({ adminsDb });
 const adminLogin = makeAdminLogin({ adminsDb, authService });
 
 const adminService = Object.freeze({
@@ -21,8 +21,8 @@ const adminService = Object.freeze({
     editAdmin,
     listAdmins,
     removeAdmin,
-    getAdmin,
+    getAdminById,
     adminLogin
 });
 
-module.exports = { adminService, addAdmin, editAdmin, listAdmins, removeAdmin, getAdmin, adminLogin };
+module.exports = { adminService, addAdmin, editAdmin, listAdmins, removeAdmin, getAdminById, adminLogin };
