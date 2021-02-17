@@ -147,7 +147,6 @@ const makeLoginCustomer = function ({ customerLogin }) {
             'Content-Type': 'application/json'
         };
         try {
-            
             const token = await customerLogin(httpRequest.body);
             return {
                 headers,

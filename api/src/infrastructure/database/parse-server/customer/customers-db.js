@@ -59,9 +59,8 @@ module.exports = function makeCustomersDb() {
 
     async function insert(customer) {
         const user = new CustomerUser();
-        username = customer.username ? customer.username : customer.email;
 
-        user.set("username", username);
+        user.set("username", customer.email);
         user.set("password", customer.password);
         user.set("email", customer.email);
         user.set("role", "customer");
