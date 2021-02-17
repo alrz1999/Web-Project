@@ -7,7 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { FONT_FAMILY } from "../utils/constants";
+import { FONT_FAMILY, PATH } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -31,7 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DoctorCard({ name, description, imageBase64, doctorID }) {
+export default function DoctorCard({
+  name,
+  description,
+  imageBase64,
+  doctorID,
+}) {
   const classes = useStyles();
 
   return (
@@ -70,16 +76,17 @@ export default function DoctorCard({ name, description, imageBase64, doctorID })
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Button
-              size="small"
-              color="secondary"
-              fullWidth
-              className={classes.cardButton}
-              variant="contained"
-            >
-              گرفتن نوبت
-              {/* TODO doctor appointment*/}
-            </Button>
+            <Link to={PATH.DOCTER_APPOINTMENT + doctorID}>
+              <Button
+                size="small"
+                color="secondary"
+                fullWidth
+                className={classes.cardButton}
+                variant="contained"
+              >
+                گرفتن نوبت
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </CardActions>

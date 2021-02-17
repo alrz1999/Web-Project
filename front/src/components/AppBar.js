@@ -38,7 +38,8 @@ function PagesButtons() {
   const classes = useStyles();
   return (
     <>
-      <Link>
+    {/* TODO handle id */}
+      <Link to={PATH.DOCTER_APPOINTMENT + "someID"}>
         <Button variant="button" color="textPrimary" className={classes.button}>
           نوبت‌های من
         </Button>
