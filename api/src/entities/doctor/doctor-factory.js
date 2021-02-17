@@ -1,7 +1,7 @@
 const Doctor = require("./doctor")
 
-module.exports = function doctorFactory(db, sanitize) {
-    return function createDoctor({ firstName, lastName, email, phoneNumber, password, id } = {}) {
+module.exports = function doctorFactory(doctorsDb) {
+    return function createDoctor({ firstName, lastName, email, phoneNumber, password, doctorId, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')
         }
@@ -18,11 +18,6 @@ module.exports = function doctorFactory(db, sanitize) {
             throw new Error("Password must be longer than 4 characters.")
         }
 
-        return Doctor({
-            getFirstName: () => firstName,
-            getLastName: () => lastName,
-            getEmail: () => email,
-            getId: () => id,
-        })
+        return new Doctor(firstName, lastName, doctorId, email, phoneNumber, password)
     }
-}
+};

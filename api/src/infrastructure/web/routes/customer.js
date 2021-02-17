@@ -15,6 +15,8 @@ const customersRouter = () => {
         .post(makeCallBack(controller.postEditCustomer));
     router.route('/remove/:customerId')
         .post(makeCallBack(controller.deleteCustomer));
+        router.route('/login')
+        .post(makeCallBack(controller.login));
     return router;
 };
 

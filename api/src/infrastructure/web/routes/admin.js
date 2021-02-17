@@ -15,6 +15,8 @@ const adminsRouter = () => {
         .post(makeCallBack(controller.postEditAdmin));
     router.route('/remove/:adminId')
         .post(makeCallBack(controller.deleteAdmin));
+    router.route('/login')
+        .post(makeCallBack(controller.login));
     return router;
 };
 

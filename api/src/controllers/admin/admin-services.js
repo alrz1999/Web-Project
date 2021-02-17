@@ -114,4 +114,62 @@ const makeAddAdmin = function ({ addAdmin }) {
     }
 }
 
-module.exports = { makeDeleteAdmin, makeGetAdmins, makeEditAdmin, makeAddAdmin };
+const makeGetAdmin = function ({ getAdmin }) {
+    return async function getAdminById(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { id } = httpRequest.body;
+            const admin = await getAdmin(id)
+            return {
+                headers,
+                statusCode: 200,
+                body: admin
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+const makeLoginAdmin = function ({ adminLogin }) {
+    return async function loginAdmin(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { phoneNumber, password } = httpRequest.body;
+            const token = await adminLogin(phoneNumber, password);
+            return {
+                headers,
+                statusCode: 200,
+                body: {
+                    success: true,
+                    token: token,
+                    // expiresIn: tokenObject.expires
+                }
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+module.exports = { makeDeleteAdmin, makeGetAdmins, makeEditAdmin, makeAddAdmin, makeGetAdmin, makeLoginAdmin };

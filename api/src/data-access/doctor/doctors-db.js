@@ -6,7 +6,9 @@ module.exports = function makeDoctorsDb({ makeDb }) {
         findByPhoneNumber,
         insert,
         remove,
-        update
+        update,
+        login,
+        logout
     });
 
     async function findAll() {
@@ -48,6 +50,18 @@ module.exports = function makeDoctorsDb({ makeDb }) {
     async function remove(id) {
         const db = await makeDb();
         const result = await db.remove(id);
+        return result;
+    }
+
+    async function login({ ...loginInfo }) {
+        const db = await makeDb();
+        const result = await db.login(loginInfo);
+        return result;
+    }
+
+    async function logout({ ...logoutInfo }) {
+        const db = await makeDb();
+        const result = await db.logout(logoutInfo);
         return result;
     }
 }   

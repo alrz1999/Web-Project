@@ -1,4 +1,4 @@
-const { removeCustomer, addCustomer, editCustomer, listCustomers } = require('../../application/use-cases/customer');
+const { removeCustomer, addCustomer, editCustomer, listCustomers, getCustomer, customerLogin } = require('../../application/use-cases/customer');
 const customerSubControllersFactory = require('./customer-services');
 customerSubControllersFactory.makeAddCustomer
 
@@ -6,15 +6,23 @@ const deleteCustomer = customerSubControllersFactory.makeDeleteCustomer({ remove
 const getCustomers = customerSubControllersFactory.makeGetCustomers({ listCustomers });
 const postAddCustomer = customerSubControllersFactory.makeAddCustomer({ addCustomer });
 const postEditCustomer = customerSubControllersFactory.makeEditCustomer({ editCustomer });
+const getCustomer = customerSubControllersFactory.makeGetCustomer({ getCustomer });
+const loginCustomer = customerSubControllersFactory.makeloginCustomer({ customerLogin });
+
 
 const customerControllers = {
     deleteCustomer,
     getCustomers,
     postAddCustomer,
-    postEditCustomer
+    postEditCustomer,
+    getCustomer,
+    loginCustomer,
 };
 
-module.exports = { customerControllers, deleteCustomer, getCustomers, postAddCustomer, postEditCustomer };
+module.exports = {
+    customerControllers, deleteCustomer, getCustomers, postAddCustomer, postEditCustomer, getCustomer,
+    loginCustomer,
+};
 
 
 

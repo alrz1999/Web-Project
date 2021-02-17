@@ -1,6 +1,6 @@
 const Admin = require("./admin")
 
-module.exports = function adminFactory(db, sanitize) {
+module.exports = function adminFactory(adminsDb) {
     return function createAdmin({ firstName, lastName, email, phoneNumber, password, id } = {}) {
         if (!firstName) {
             throw new Error('FirstName can not be empty.')
@@ -18,11 +18,6 @@ module.exports = function adminFactory(db, sanitize) {
             throw new Error("Password must be longer than 4 characters.")
         }
 
-        return Admin({
-            getFirstName: () => firstName,
-            getLastName: () => lastName,
-            getEmail: () => email,
-            getId: () => id,
-        })
+        return new Admin();
     }
 }

@@ -10,7 +10,9 @@ module.exports = function makeAdminsDb() {
         findByPhoneNumber,
         insert,
         remove,
-        update
+        update,
+        login,
+        logout
     });
 
     async function findAll() {

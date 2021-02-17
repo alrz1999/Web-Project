@@ -114,4 +114,62 @@ const makeAddCustomer = function ({ addCustomer }) {
     }
 }
 
-module.exports = { makeAddCustomer, makeDeleteCustomer, makeEditCustomer, makeGetCustomers };
+const makeGetCustomer = function ({ getCustomer }) {
+    return async function getCustomerById(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { id } = httpRequest.body;
+            const customer = await getCustomer(id)
+            return {
+                headers,
+                statusCode: 200,
+                body: customer
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+}
+
+const makeLoginCustomer = function ({ customerLogin }) {
+    return async function loginCustomer(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { phoneNumber, password } = httpRequest.body;
+            const token = await customerLogin(phoneNumber, password);
+            return {
+                headers,
+                statusCode: 200,
+                body: {
+                    success: true,
+                    token: token,
+                    // expiresIn: tokenObject.expires
+                }
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+module.exports = { makeAddCustomer, makeDeleteCustomer, makeEditCustomer, makeGetCustomers, makeGetCustomer, makeLoginCustomer };

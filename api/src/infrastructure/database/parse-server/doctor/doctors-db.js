@@ -10,7 +10,9 @@ module.exports = function makeDoctorsDb() {
         findByPhoneNumber,
         insert,
         remove,
-        update
+        update,
+        login,
+        logout
     });
 
     async function findAll() {
@@ -127,6 +129,28 @@ module.exports = function makeDoctorsDb() {
         }
 
         return exists;
+    };
+
+    async function login({ ...loginInfo }) {
+        const query = new Parse.Query(DoctorUser);
+        query.equalTo("role", "doctor");
+        query.equalTo("id", id);
+        const result = await query.find();
+        if (result.length === 0) {
+            return null;
+        };
+        return convertToDoctorEntity(result[0]);
+    };
+
+    async function logout({ ...logoutInfo }) {
+        const query = new Parse.Query(DoctorUser);
+        query.equalTo("role", "doctor");
+        query.equalTo("id", id);
+        const result = await query.find();
+        if (result.length === 0) {
+            return null;
+        };
+        return convertToDoctorEntity(result[0]);
     };
 
 

@@ -15,6 +15,8 @@ const doctorsRouter = () => {
         .post(makeCallBack(controller.postEditDoctor));
     router.route('/remove/:doctorId')
         .post(makeCallBack(controller.deleteDoctor));
+    router.route('/login')
+        .post(makeCallBack(controller.login));
     return router;
 };
 

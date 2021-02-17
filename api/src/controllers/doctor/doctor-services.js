@@ -114,4 +114,62 @@ const makeAddDoctor = function ({ addDoctor }) {
     }
 }
 
-module.exports = { makeDeleteDoctor, makeGetDoctors, makeEditDoctor, makeAddDoctor };
+const makeGetDoctor = function ({ getDoctor }) {
+    return async function getDoctorById(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { id } = httpRequest.body;
+            const doctor = await getDoctor(id)
+            return {
+                headers,
+                statusCode: 200,
+                body: doctor
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+const makeLoginDoctor = function ({ doctorLogin }) {
+    return async function loginDoctor(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { phoneNumber, password } = httpRequest.body;
+            const token = await doctorLogin(phoneNumber, password);
+            return {
+                headers,
+                statusCode: 200,
+                body: {
+                    success: true,
+                    token: token,
+                    // expiresIn: tokenObject.expires
+                }
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+module.exports = { makeDeleteDoctor, makeGetDoctors, makeEditDoctor, makeAddDoctor, makeGetDoctor, makeLoginDoctor };
