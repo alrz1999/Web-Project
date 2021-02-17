@@ -1,3 +1,4 @@
+const apm = require('./src/infrastructure/monitoring/apm-client').init();
 const express = require('express');
 const app = express();
 const createError = require('http-errors');
