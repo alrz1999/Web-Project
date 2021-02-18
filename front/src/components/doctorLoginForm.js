@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { logInDoctor, logInPatient } from "../utils/patient.service";
+import { logInDoctor } from "../utils/patient.service";
 import { toastErr } from "./Toast";
 import {
   AUTH_ACTION_TYPE,
@@ -118,13 +118,6 @@ export default function PatientLogInForm() {
           error={errors.password}
           autoComplete="current-password"
         />
-        {/* <div dir="rtl">
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="مرا به خاطر بسپار"
-            className={classes.rememberMe}
-          />
-        </div> */}
         <Button
           type="submit"
           fullWidth

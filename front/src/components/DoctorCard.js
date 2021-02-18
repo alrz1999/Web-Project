@@ -63,19 +63,6 @@ export default function DoctorCard({
 
       <CardActions>
         <Grid container justify="space-between">
-          {/* <Grid item xs={6}>
-            <Link to={PATH.DOCTER_PROFILE + doctorId}>
-              <Button
-                size="small"
-                color="primary"
-                fullWidth
-                className={classes.cardButton}
-                variant="contained"
-              >
-                صفحه پزشک
-              </Button>
-            </Link>
-          </Grid> */}
           <Grid item xs={6}>
             <Link to={PATH.DOCTER_APPOINTMENT + "" + doctorId}>
               <Button

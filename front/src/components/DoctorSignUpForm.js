@@ -1,14 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import FileInputComponent from "react-file-input-previews-base64";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { useForm } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import {
+  AUTH_ACTION_TYPE,
+  LOCAL_STORAGE,
+  PATH,
+  USER_ROLE,
+} from "../utils/constants";
 import { addDoctor, addPatient } from "../utils/patient.service";
 import { toastErr } from "./Toast";
 
@@ -42,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DoctorSignupForm() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  let history = useHistory();
   const { register, handleSubmit, watch, errors } = useForm();
 
   const [image, setImage] = React.useState("");
@@ -57,7 +67,16 @@ export default function DoctorSignupForm() {
               toastErr(json.error);
               return;
             }
-            // TODO use token and redirect
+            localStorage.setItem(
+              LOCAL_STORAGE.USER,
+              JSON.stringify({ role: USER_ROLE.DOCTOR, token: json.token })
+            );
+
+            dispatch({
+              type: AUTH_ACTION_TYPE.LOGIN_SUCCESS,
+              user: { role: USER_ROLE.DOCTOR, token: json.token },
+            });
+            history.push(PATH.DOCTORS_LIST);
           })
           .catch((e) => console.log(e));
       })

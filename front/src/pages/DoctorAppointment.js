@@ -4,18 +4,16 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
 import Grid from "@material-ui/core/Grid";
 import { useParams } from "react-router-dom";
 import { ListSubheader } from "@material-ui/core";
 import { useState } from "react";
 import { getAppointment } from "../utils/patient.service";
 import { toastErr } from "../components/Toast";
-import ReactJson from "react-json-view";
+import ConfirmDialog from "../components/ConfirDialogAppointment";
+import { useSelector } from "react-redux";
+import { USER_ROLE } from "../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,15 +31,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function DoctorAppointment() {
   const { id: doctorID } = useParams();
   console.log(doctorID);
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState({});
+  const user = useSelector((state) => state.authentication.user);
 
-  const handleListItemClick = (event, day, time) => {
-    setSelectedIndex({ day, time });
+  const handleListItemClick = (event, time) => {
+    setSelectedIndex(time);
   };
   const classes = useStyles();
 
@@ -58,14 +56,13 @@ export default function DoctorAppointment() {
               return;
             }
             setTimes(json);
-            // TODO use token and redirect
           })
           .catch((e) => console.log(e));
       })
       .catch((e) => console.log(e));
   }, [doctorID]);
 
-  const days = ["saturday", "sunday", "monday", "tuesday", "wednesDay"];
+  const days = ["saturday", "sunday", "monday", "tuesday", "wednesday"];
 
   return (
     <React.Fragment>
@@ -87,25 +84,28 @@ export default function DoctorAppointment() {
                   >
                     <h2>{day}</h2>
                   </ListSubheader>
-                  {times.filter(time => time.day === day).map((time) => (
-                    <ListItem
-                      button
-                      selected={
-                        selectedIndex.day === day &&
-                        selectedIndex.time === time.time
-                      }
-                      onClick={(event) =>
-                        handleListItemClick(event, time.day, time.time)
-                      }
-                      key={time.day + time.time}
-                    >
-                      <ListItemText primary={time.time} />
-                    </ListItem>
-                  ))}
+                  {times
+                    .filter((time) => time.day === day)
+                    .map((time) => (
+                      <ListItem
+                        button
+                        selected={
+                          selectedIndex.day === time.day &&
+                          selectedIndex.time === time.time
+                        }
+                        onClick={(event) => handleListItemClick(event, time)}
+                        key={time.day + time.time}
+                      >
+                        <ListItemText primary={time.time} />
+                      </ListItem>
+                    ))}
                 </List>
               </div>
             </Grid>
           ))}
+        </Grid>
+        <Grid item xs={12}>
+          {user?.role === USER_ROLE.PATIENT ? <ConfirmDialog time={selectedIndex} /> : <></>}
         </Grid>
       </Container>
     </React.Fragment>

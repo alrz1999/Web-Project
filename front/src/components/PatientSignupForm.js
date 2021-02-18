@@ -1,4 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  AUTH_ACTION_TYPE,
+  LOCAL_STORAGE,
+  PATH,
+  USER_ROLE,
+} from "../utils/constants";
 import { useForm } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -40,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PaitientSignupForm() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  let history = useHistory();
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (data) => {
     addPatient(data)
@@ -51,7 +61,16 @@ export default function PaitientSignupForm() {
               toastErr(json.error);
               return;
             }
-            // TODO use token and redirect
+            localStorage.setItem(
+              LOCAL_STORAGE.USER,
+              JSON.stringify({ role: USER_ROLE.PATIENT, token: json.token })
+            );
+
+            dispatch({
+              type: AUTH_ACTION_TYPE.LOGIN_SUCCESS,
+              user: { role: USER_ROLE.PATIENT, token: json.token },
+            });
+            history.push(PATH.DOCTORS_LIST);
           })
           .catch((e) => console.log(e));
       })
