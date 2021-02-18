@@ -4,7 +4,7 @@ const makeEditCustomer = require('./edit-customer');
 const makeListCustomers = require('./list-customers');
 const makeGetCustomer = require('./get-customer');
 const makeCustomerLogin = require('./customer-login');
-
+const makeFillAppointment = require('./fill-appointment');
 
 const customersDb = require('../../../data-access/customer');
 const { authService } = require('../../security')
@@ -15,6 +15,7 @@ const listCustomers = makeListCustomers({ customersDb });
 const removeCustomer = makeDeleteCustomer({ customersDb });
 const getCustomerById = makeGetCustomer({ customersDb });
 const customerLogin = makeCustomerLogin({ customersDb, authService });
+const fillFreeAppointment = makeFillAppointment({ customersDb });
 
 const customerService = Object.freeze({
     addCustomer,
@@ -22,7 +23,8 @@ const customerService = Object.freeze({
     listCustomers,
     removeCustomer,
     getCustomerById,
-    customerLogin
+    customerLogin,
+    fillFreeAppointment
 });
 
-module.exports = { customerService, addCustomer, editCustomer, listCustomers, removeCustomer, getCustomerById, customerLogin };
+module.exports = { customerService, addCustomer, editCustomer, listCustomers, removeCustomer, getCustomerById, customerLogin, fillFreeAppointment };

@@ -1,6 +1,9 @@
 const Parse = require('parse/node');
 const Customer = require('../../../../entities/customer/customer');
-const CustomerUser = require('./customer-dto')
+const CustomerUser = require('./customer-dto');
+const AppointmentDTO = require('../doctor/appoitment-dto');
+const Appointment = require('../../../../entities/doctor/appointment');
+
 
 module.exports = function makeCustomersDb() {
     return Object.freeze({
@@ -13,7 +16,8 @@ module.exports = function makeCustomersDb() {
         update,
         login,
         logout,
-        exists
+        exists,
+        fillAppointment
     });
 
     async function findAll() {
@@ -138,6 +142,20 @@ module.exports = function makeCustomersDb() {
         return user;
     };
 
+    async function fillAppointment({ id, appointmentId }) {
+        const query = new Parse.Query(AppointmentDTO);
+        query.equalTo('objectId', appointmentId);
+        const resultDTO = await query.first();
+        if (resultDTO.get('customerId') == null) {
+            resultDTO.set('customerId', id);
+        } else {
+            throw new Error('this appointment is got by someone else.')
+        }
+        const newResult = await resultDTO.save();
+        const appointment = convertToAppointmentEntity(newResult)
+        return appointment;
+    };
+
     function convertToCustomerEntity(customerDTO) {
         return new Customer(
             customerDTO.get('firstName'),
@@ -146,6 +164,16 @@ module.exports = function makeCustomersDb() {
             customerDTO.get('phoneNumber'),
             customerDTO.get("password"),
             customerDTO.id,
+        );
+    };
+
+    function convertToAppointmentEntity(appoitmentDTO) {
+        return new Appointment(
+            appoitmentDTO.get('day'),
+            appoitmentDTO.get('time'),
+            appoitmentDTO.get('doctorId'),
+            appoitmentDTO.id,
+            appoitmentDTO.get('customerId'),
         );
     };
 }   

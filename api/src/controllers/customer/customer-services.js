@@ -177,7 +177,8 @@ const makeFillAppointment = function ({ fillFreeAppointment }) {
         };
         try {
             const { id, role } = httpRequest.user;
-            const results = await fillFreeAppointment({ id, role, doctorId })
+            const { appointmentId } = httpRequest.body;
+            const results = await fillFreeAppointment({ id, role, appointmentId })
             return {
                 headers,
                 statusCode: 200,

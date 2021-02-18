@@ -2,7 +2,7 @@ const Parse = require('parse/node');
 const Doctor = require('../../../../entities/doctor/doctor');
 const DoctorUser = require('./doctor-dto');
 const AppointmentDTO = require('./appoitment-dto');
-const Appointment = require('../../../../entities/doctor/appoitment');
+const Appointment = require('../../../../entities/doctor/appointment');
 
 module.exports = function makeDoctorsDb() {
     return Object.freeze({
@@ -16,7 +16,8 @@ module.exports = function makeDoctorsDb() {
         login,
         logout,
         exists,
-        getAppoitments
+        getAppoitments,
+        fillAppointment
     });
 
     async function findAll() {
@@ -167,9 +168,20 @@ module.exports = function makeDoctorsDb() {
         if (time) {
             query.equalTo('time', time);
         }
+        query.equalTo('customerId', null);
         const resultDTO = await query.find();
         const appoitments = resultDTO.map(convertToAppointmentEntity);
         return appoitments;
+    };
+
+    async function fillAppointment({ id, appointmentId }) {
+        const query = new Parse.Query(AppointmentDTO);
+        query.equalTo('objectId', appointmentId);
+        const resultDTO = await query.first();
+        resultDTO.set('customerId', id);
+        const newResult = await resultDTO.save();
+        const appoitment = newResult.map(convertToAppointmentEntity);
+        return appoitment;
     };
 
 
@@ -216,12 +228,9 @@ async function initAppointments(doctorId) {
             await newAppoitment.save();
         }
     }
-
-
 }
 const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
-const times = ["8:00-8:15", "8:15-8:30", "8:30-8:45", "8:45-9:00",
-    "9:00-9:15", "9:15-9:30", "9:30-9:45", "9:45-10:00",
-    "10:00-10:15", "10:15-10:30", "10:30-10:45", "10:45-11:00",
-    "11:00-11:15", "11:15-11:30", "11:30-11:45", "11:45-12:00",
-    "12:00-12:15", "12:15-12:30", "12:30-12:45", "12:45-13:00",]
+const times = ["8:00-8:3", "8:30-9:00",
+    "9:00-9:30", "9:30-10:00",
+    "10:00-10:30", "10:30-11:00",
+    "11:00-11:30", "11:30-12:00"]
