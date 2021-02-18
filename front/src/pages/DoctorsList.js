@@ -49,12 +49,12 @@ export default function DoctorsList() {
           direction="row-reverse"
         >
           {cardss.map((card) => (
-            <Grid item key={card.medicalNumber} xs={12} sm={6} md={4} lg={3}>
+            <Grid item key={card.id} xs={12} sm={6} md={4} lg={3}>
               <DoctorCard
                 name={card.firstName + " " + card.lastName}
                 description={card.description}
                 imageBase64={card.image}
-                medicalNumber={card.medicalNumber}
+                doctorId={card.id}
               />
             </Grid>
           ))}
