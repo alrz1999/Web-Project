@@ -7,7 +7,7 @@ module.exports = function makeCustomerLogin({ customersDb, authService }) {
         };
         const customer = await customersDb.login({ email, password });
         const { id } = customer;
-        const token = authService.generateToken({ role, id });
+        const token = authService.generateToken({ role:"customer", id });
 
         return token;
     }

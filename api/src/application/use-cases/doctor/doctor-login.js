@@ -7,7 +7,7 @@ module.exports = function makeDoctorLogin({ doctorsDb, authService }) {
         };
         const doctor = await doctorsDb.login({medicalNumber, password});
         const { id } = doctor;
-        const token = authService.generateToken({ id, role });
+        const token = authService.generateToken({ id, role: 'doctor' });
 
         return token;
     }
