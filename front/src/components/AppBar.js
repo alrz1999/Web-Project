@@ -39,11 +39,11 @@ function PagesButtons() {
   return (
     <>
     {/* TODO handle id */}
-      <Link to={PATH.DOCTER_APPOINTMENT + "someID"}>
+      {/* <Link to={PATH.DOCTER_APPOINTMENT + "someID"}>
         <Button variant="button" color="textPrimary" className={classes.button}>
           نوبت‌های من
         </Button>
-      </Link>
+      </Link> */}
       <Link to={PATH.DOCTORS_LIST}>
         <Button variant="button" color="primary" className={classes.button}>
           لیست پزشکان

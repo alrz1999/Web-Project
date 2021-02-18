@@ -1,11 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { useEffect, useState } from "react";
-import { fetchBase64 } from "react-fetch-image";
+import { useState } from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import DoctorCard from "../components/DoctorCard";
+import { getDoctorsList } from "../utils/patient.service";
+import { toastErr } from "../components/Toast";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -17,37 +18,24 @@ const useStyles = makeStyles((theme) => ({
 export default function DoctorsList() {
   const classes = useStyles();
 
-  const [image64, setBackgroundSrc] = useState("");
-  const [, setFetchingBackgroundSrc] = useState(true);
-  const cards = [
-    {
-      doctorID: 0,
-      name: "دکتر ۰",
-      description:
-        "توضات مربوط به یک پزشک در این مکان قرار می‌گیرد. او می‌تواند در این جا مقداری در مورد خود توضیح دهد",
-      image: image64,
-    },
-    {
-      doctorID: 1,
-      name: "دکتر ۱",
-      description: "ok",
-      // image: image64,
-    },
-  ];
+  const [cardss, setCards] = useState([]);
 
-  useEffect(() => {
-    fetchBase64({
-      url: "https://cdn2.thecatapi.com/images/J2PmlIizw.jpg",
-      ...{
-        callback: (base64) => {
-          setBackgroundSrc(base64);
-          setFetchingBackgroundSrc(false);
-        },
-        callbackError: () => {
-          setFetchingBackgroundSrc(false);
-        },
-      },
-    });
+  React.useEffect(() => {
+    getDoctorsList()
+      .then((res) => {
+        res
+          .json()
+          .then((json) => {
+            if (json.error) {
+              toastErr(json.error);
+              return;
+            }
+            setCards(json);
+            // TODO use token and redirect
+          })
+          .catch((e) => console.log(e));
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   return (
@@ -60,13 +48,13 @@ export default function DoctorsList() {
           justify="flex-start"
           direction="row-reverse"
         >
-          {cards.map((card) => (
-            <Grid item key={card.doctorID} xs={12} sm={6} md={4} lg={3}>
+          {cardss.map((card) => (
+            <Grid item key={card.medicalNumber} xs={12} sm={6} md={4} lg={3}>
               <DoctorCard
-                name={card.name}
+                name={card.firstName + " " + card.lastName}
                 description={card.description}
                 imageBase64={card.image}
-                doctorID={card.doctorID}
+                medicalNumber={card.medicalNumber}
               />
             </Grid>
           ))}

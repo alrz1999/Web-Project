@@ -1,4 +1,6 @@
 import React from "react";
+import FileInputComponent from "react-file-input-previews-base64";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { useForm } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -7,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { addPatient } from "../utils/patient.service";
+import { addDoctor, addPatient } from "../utils/patient.service";
 import { toastErr } from "./Toast";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: theme.spacing(1),
   },
-  submit: {
+  button: {
     margin: theme.spacing(3, 0, 2),
     fontFamily: ["Sahel", "Samim", "Shabnam"].join(","),
     fontSize: "large",
@@ -38,11 +40,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaitientSignupForm() {
+export default function DoctorSignupForm() {
   const classes = useStyles();
   const { register, handleSubmit, watch, errors } = useForm();
+
+  const [image, setImage] = React.useState("");
+
   const onSubmit = (data) => {
-    addPatient(data)
+    console.log(data);
+    addDoctor({ ...data, image: image })
       .then((res) => {
         res
           .json()
@@ -62,7 +68,7 @@ export default function PaitientSignupForm() {
     <div className={classes.paper}>
       <Grid container justify="flex-end">
         <Typography component="h1" variant="h4" className={classes.typography}>
-          ثبت‌نام بیمار
+          ثبت‌نام پزشک
         </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -94,6 +100,28 @@ export default function PaitientSignupForm() {
           name="lastName"
           inputRef={register({ required: true })}
           error={errors.lastName}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="medicalNumber"
+          label="شماره‌نظام پزشکی"
+          name="medicalNumber"
+          inputRef={register({ required: true, pattern: /^\d*$/i })}
+          error={errors.medicalNumber}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="description"
+          label="توضیحات"
+          name="description"
+          inputRef={register({ required: true })}
+          error={errors.description}
         />
         <TextField
           variant="outlined"
@@ -145,12 +173,32 @@ export default function PaitientSignupForm() {
           })}
           error={errors.passwordRepeat}
         />
+        <FileInputComponent
+          labelText=""
+          labelStyle={{ fontSize: 14 }}
+          multiple={false}
+          imagePreview={false}
+          callbackFunction={(file_arr) => setImage(file_arr.base64)}
+          buttonComponent={
+            <Button
+              color="secondary"
+              variant="contained"
+              component="label"
+              className={classes.button}
+            >
+              تصویر
+              <PhotoCameraIcon />
+              <input type="file" hidden />
+            </Button>
+          }
+          accept="image/*"
+        />
         <Button
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
+          className={classes.button}
         >
           ثبت‌نام
         </Button>

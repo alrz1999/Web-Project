@@ -36,7 +36,7 @@ export default function DoctorCard({
   name,
   description,
   imageBase64,
-  doctorID,
+  medicalNumber,
 }) {
   const classes = useStyles();
 
@@ -64,19 +64,20 @@ export default function DoctorCard({
       <CardActions>
         <Grid container justify="space-between">
           <Grid item xs={6}>
-            <Button
-              size="small"
-              color="primary"
-              fullWidth
-              className={classes.cardButton}
-              variant="contained"
-            >
-              صفحه پزشک
-              {/* TODO  doctor page*/}
-            </Button>
+            <Link to={PATH.DOCTER_PROFILE + medicalNumber}>
+              <Button
+                size="small"
+                color="primary"
+                fullWidth
+                className={classes.cardButton}
+                variant="contained"
+              >
+                صفحه پزشک
+              </Button>
+            </Link>
           </Grid>
           <Grid item xs={6}>
-            <Link to={PATH.DOCTER_APPOINTMENT + doctorID}>
+            <Link to={PATH.DOCTER_APPOINTMENT + medicalNumber}>
               <Button
                 size="small"
                 color="secondary"
