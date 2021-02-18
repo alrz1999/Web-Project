@@ -389,3 +389,5 @@ Temporary Items
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,node,react,reactnative
+
+!api/bin
