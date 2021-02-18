@@ -13,7 +13,8 @@ module.exports = function makeDoctorsDb() {
         update,
         login,
         logout,
-        exists
+        exists,
+        getAppoitments
     });
 
     async function findAll() {
@@ -59,11 +60,10 @@ module.exports = function makeDoctorsDb() {
 
     async function insert(doctor) {
         const user = new DoctorUser();
-        username = doctor.username ? doctor.username : doctor.email;
-
-        user.set("username", username);
+        let username = doctor.medicalNumber + '';
+        
         user.set("password", doctor.password);
-        user.set("username", toString(doctor.medicalNumber))
+        user.set("username", username)
         user.set("email", doctor.email);
         user.set("role", "doctor");
         user.set("firstName", doctor.firstName);
@@ -147,6 +147,14 @@ module.exports = function makeDoctorsDb() {
     async function logout({ ...logoutInfo }) {
         const user = await Parse.User.logOut()
         return user;
+    };
+
+    async function getAppoitments() {
+        const query = new Parse.Query(DoctorUser);
+        query.equalTo("role", "doctor");
+        const resultDTO = await query.find();
+        const doctors = resultDTO.map(convertToDoctorEntity);
+        return doctors;
     };
 
 
