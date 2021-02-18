@@ -147,8 +147,8 @@ const makeLoginDoctor = function ({ doctorLogin }) {
             'Content-Type': 'application/json'
         };
         try {
-            const { phoneNumber, password } = httpRequest.body;
-            const token = await doctorLogin({ phoneNumber, password });
+            const { medicalNumber, password } = httpRequest.body;
+            const token = await doctorLogin({ medicalNumber, password });
             return {
                 headers,
                 statusCode: 200,
