@@ -84,19 +84,18 @@ const makeEditDoctor = function ({ editDoctor }) {
 }
 
 
-const makeAddDoctor = function ({ addDoctor }) {
+const makeAddDoctor = function ({ addDoctor, doctorLogin }) {
     return async function postAddDoctor(httpRequest) {
         try {
-            const { ...doctorInfo } = httpRequest.body
-            const newDoctor = await addDoctor({
-                ...doctorInfo,
-            })
+            const { ...doctorInfo } = httpRequest.body;
+            const newDoctor = await addDoctor({ ...doctorInfo });
+            const token = await doctorLogin({ ...doctorInfo, role: "doctor" });
             return {
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 statusCode: 201,
-                body: { posted: newDoctor }
+                body: { posted: newDoctor, token }
             }
         } catch (e) {
             // TODO: Error logging

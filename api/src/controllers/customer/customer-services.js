@@ -84,19 +84,18 @@ const makeEditCustomer = function ({ editCustomer }) {
 }
 
 
-const makeAddCustomer = function ({ addCustomer }) {
+const makeAddCustomer = function ({ addCustomer, customerLogin }) {
     return async function postAddCustomer(httpRequest) {
         try {
             const { ...customerInfo } = httpRequest.body
-            const newCustomer = await addCustomer({
-                ...customerInfo,
-            })
+            const newCustomer = await addCustomer({ ...customerInfo });
+            const token = await customerLogin({ ...customerInfo, role: "customer" });
             return {
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 statusCode: 201,
-                body: { posted: newCustomer }
+                body: { posted: newCustomer, token }
             }
         } catch (e) {
             // TODO: Error logging

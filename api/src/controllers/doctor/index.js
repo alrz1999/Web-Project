@@ -4,7 +4,7 @@ const doctorSubControllersFactory = require('./doctor-services');
 
 const deleteDoctor = doctorSubControllersFactory.makeDeleteDoctor({ removeDoctor });
 const getDoctors = doctorSubControllersFactory.makeGetDoctors({ listDoctors });
-const postAddDoctor = doctorSubControllersFactory.makeAddDoctor({ addDoctor });
+const postAddDoctor = doctorSubControllersFactory.makeAddDoctor({ addDoctor, doctorLogin });
 const postEditDoctor = doctorSubControllersFactory.makeEditDoctor({ editDoctor });
 const getDoctor = doctorSubControllersFactory.makeGetDoctor({ getDoctorById });
 const loginDoctor = doctorSubControllersFactory.makeLoginDoctor({ doctorLogin });
