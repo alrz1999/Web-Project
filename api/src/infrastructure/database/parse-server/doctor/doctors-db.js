@@ -192,7 +192,7 @@ module.exports = function makeDoctorsDb() {
             appoitmentDTO.get('day'),
             appoitmentDTO.get('time'),
             appoitmentDTO.get('doctorId'),
-            appoitmentDTO.get('id'),
+            appoitmentDTO.id,
             appoitmentDTO.get('customerId'),
         );
     };

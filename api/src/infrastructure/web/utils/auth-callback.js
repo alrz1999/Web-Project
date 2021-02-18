@@ -8,6 +8,7 @@ const authenticate = (...roles) => async (req, res, next) => {
     }
     try {
         let payload = await authService.decodeToken({ token });
+        req.user = payload;
         console.log(roles);
         if (roles.length > 0 && !roles.find(role => req.user.role === role)) {
             return res.status(403).send("access denied.");

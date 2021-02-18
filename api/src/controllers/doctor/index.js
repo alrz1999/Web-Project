@@ -9,7 +9,6 @@ const postEditDoctor = doctorSubControllersFactory.makeEditDoctor({ editDoctor }
 const getDoctor = doctorSubControllersFactory.makeGetDoctor({ getDoctorById });
 const loginDoctor = doctorSubControllersFactory.makeLoginDoctor({ doctorLogin });
 const getAppointments = doctorSubControllersFactory.makeGetAppointments({ getAllAppointments });
-const fillAppointments = doctorSubControllersFactory.makeLoginDoctor({ doctorLogin });
 
 
 const doctorControllers = {
@@ -19,7 +18,7 @@ const doctorControllers = {
     postEditDoctor,
     getDoctor,
     loginDoctor,
-    getAppointments
+    getAppointments,
 };
 
 module.exports = {

@@ -170,4 +170,31 @@ const makeLoginCustomer = function ({ customerLogin }) {
     }
 };
 
-module.exports = { makeAddCustomer, makeDeleteCustomer, makeEditCustomer, makeGetCustomers, makeGetCustomer, makeLoginCustomer };
+const makeFillAppointment = function ({ fillFreeAppointment }) {
+    return async function fillAppointment(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { id, role } = httpRequest.user;
+            const results = await fillFreeAppointment({ id, role, doctorId })
+            return {
+                headers,
+                statusCode: 200,
+                body: results
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+module.exports = { makeAddCustomer, makeDeleteCustomer, makeEditCustomer, makeGetCustomers, makeGetCustomer, makeLoginCustomer, makeFillAppointment };

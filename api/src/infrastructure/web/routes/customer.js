@@ -13,6 +13,8 @@ const customersRouter = () => {
         .post(makeCallBack(controller.deleteCustomer));
     router.route('/login')
         .post(makeCallBack(controller.loginCustomer));
+    router.route('/appointments')
+        .post(authenticate('customer'), makeCallBack(controller.fillAppointment));
     router.route('/:customerId')
         .get(makeCallBack(controller.getCustomer))
         .post(makeCallBack(controller.postEditCustomer));
