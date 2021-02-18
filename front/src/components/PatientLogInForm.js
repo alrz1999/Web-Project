@@ -1,12 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {
-  AUTH_ACTION_TYPE,
-  LOCAL_STORAGE,
-  PATH,
-  USER_ROLE,
-} from "../utils/constants";
 import { useForm } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,8 +7,17 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { addPatient } from "../utils/patient.service";
+import { logInPatient } from "../utils/patient.service";
 import { toastErr } from "./Toast";
+import {
+  AUTH_ACTION_TYPE,
+  LOCAL_STORAGE,
+  PATH,
+  USER_ROLE,
+} from "../utils/constants";
+import { useHistory } from "react-router-dom";
+import { StoreLogInUser } from "../reducers/store";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,13 +47,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaitientSignupForm() {
+export default function PatientLogInForm() {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const { register, handleSubmit, errors } = useForm();
   let history = useHistory();
-  const { register, handleSubmit, watch, errors } = useForm();
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
-    addPatient(data)
+    console.log(data);
+    logInPatient(data)
       .then((res) => {
         res
           .json()
@@ -76,12 +79,11 @@ export default function PaitientSignupForm() {
       })
       .catch((err) => console.log(err.error));
   };
-
   return (
     <div className={classes.paper}>
       <Grid container justify="flex-end">
         <Typography component="h1" variant="h4" className={classes.typography}>
-          ثبت‌نام بیمار
+          ورود
         </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -89,53 +91,20 @@ export default function PaitientSignupForm() {
       </Grid>
       <form
         className={classes.form}
-        onSubmit={handleSubmit(onSubmit)}
         noValidate
+        onSubmit={handleSubmit(onSubmit)}
       >
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          id="firstName"
-          label="نام"
-          name="firstName"
-          inputRef={register({ required: true })}
-          error={errors.firstName}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="lastName"
-          label="نام خانوادگی"
-          name="lastName"
-          inputRef={register({ required: true })}
-          error={errors.lastName}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
           id="email"
-          label="Email Address"
+          label="ایمیل"
           name="email"
+          autoComplete="email"
           inputRef={register({ required: true })}
           error={errors.email}
-        />
-
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="phoneNumber"
-          label="شماره موبایل"
-          name="phoneNumber"
-          inputRef={register({ required: true, pattern: /^\d{10}$/i })}
-          error={errors.phoneNumber}
         />
         <TextField
           variant="outlined"
@@ -146,24 +115,17 @@ export default function PaitientSignupForm() {
           label="رمز عبور"
           type="password"
           id="password"
-          inputRef={register({ required: true, minLength: 4 })}
+          inputRef={register({ required: true })}
           error={errors.password}
+          autoComplete="current-password"
         />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="passwordRepeat"
-          label="تکرار رمز عبور"
-          type="password"
-          id="passwordRepeat"
-          inputRef={register({
-            required: true,
-            validate: (value) => value === watch("password"),
-          })}
-          error={errors.passwordRepeat}
-        />
+        {/* <div dir="rtl">
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="مرا به خاطر بسپار"
+            className={classes.rememberMe}
+          />
+        </div> */}
         <Button
           type="submit"
           fullWidth
@@ -171,7 +133,7 @@ export default function PaitientSignupForm() {
           color="primary"
           className={classes.submit}
         >
-          ثبت‌نام
+          ورود
         </Button>
       </form>
     </div>

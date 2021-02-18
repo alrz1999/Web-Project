@@ -5,7 +5,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { PATH } from "../utils/constants";
+import { AUTH_ACTION_TYPE, LOCAL_STORAGE, PATH } from "../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -34,15 +35,31 @@ function SignButtons() {
   );
 }
 
+function ExitButtons() {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  return (
+    <>
+      <Button
+        color="secondary"
+        variant="contained"
+        className={classes.button}
+        onClick={(event) => {
+          event.preventDefault();
+          dispatch({ type: AUTH_ACTION_TYPE.LOGOUT });
+          localStorage.removeItem(LOCAL_STORAGE.USER);
+        }}
+      >
+        ‌خروج
+      </Button>
+    </>
+  );
+}
+
 function PagesButtons() {
   const classes = useStyles();
   return (
     <>
-      <Link>
-        <Button variant="button" color="textPrimary" className={classes.button}>
-          نوبت‌های من
-        </Button>
-      </Link>
       <Link to={PATH.DOCTORS_LIST}>
         <Button variant="button" color="primary" className={classes.button}>
           لیست پزشکان
@@ -53,11 +70,13 @@ function PagesButtons() {
 }
 
 export default function CustomAppBar() {
+  const user = useSelector((state) => state.authentication.user);
+
   return (
     <AppBar position="static" color="default" elevation={0}>
       <Toolbar>
         <Grid container justify="flex-start">
-          <SignButtons />
+          {user?.role ? <ExitButtons /> : <SignButtons />}
         </Grid>
         <Grid container justify="flex-end">
           <PagesButtons />
