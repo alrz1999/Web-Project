@@ -1,7 +1,7 @@
 const makeGenerateToken = function ({ jwtTokenManager }) {
     return async function generateToken({ ...payload }) {
         const result = await jwtTokenManager.generateToken({ payload });
-        return result;
+        return `Bearer ${result}`;
     }
 }
 

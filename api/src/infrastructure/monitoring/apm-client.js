@@ -1,10 +1,9 @@
-// const config = require('../../../config/index.config');
-const apm = require('elastic-apm-node');
+const config = require('../../../config/index.config');
 
 
 const init = function () {
-    if (process.env.APM_EBALED) {
-        apm.start({
+    if (config.apm_enabled) {
+        require('elastic-apm-node').start({
             serviceName: 'Web-Project',
             // Use if APM Server requires a token
             secretToken: '',
