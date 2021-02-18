@@ -171,4 +171,31 @@ const makeLoginDoctor = function ({ doctorLogin }) {
     }
 };
 
-module.exports = { makeDeleteDoctor, makeGetDoctors, makeEditDoctor, makeAddDoctor, makeGetDoctor, makeLoginDoctor };
+const makeGetAppointments = function ({ getAllAppointments }) {
+    return async function getDoctorById(httpRequest) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        try {
+            const { day, time, doctorId } = httpRequest.body;
+            const results = await getAllAppointments({ day, time, doctorId })
+            return {
+                headers,
+                statusCode: 200,
+                body: results
+            };
+        } catch (e) {
+            // TODO: Error logging
+            console.log(e);
+            return {
+                headers,
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            };
+        }
+    }
+};
+
+module.exports = { makeDeleteDoctor, makeGetDoctors, makeEditDoctor, makeAddDoctor, makeGetDoctor, makeLoginDoctor, makeGetAppointments };

@@ -4,7 +4,7 @@ module.exports = function makeGetAppointments({ doctorsDb }) {
         if (!doctorId) {
             throw new Error('No doctor with specified doctor id exists.')
         }
-        const appoitments = await doctorsDb.getAppoitments({ doctorId, day, time });
+        const appoitments = await doctorsDb.getAppointments({ doctorId, day, time });
         return appoitments;
     }
 }

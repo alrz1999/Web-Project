@@ -10,7 +10,7 @@ module.exports = function makeCustomersDb({ makeDb }) {
         login,
         logout,
         exists,
-        getAppoitments
+        getAppointments
     });
 
     async function findAll() {
@@ -73,7 +73,7 @@ module.exports = function makeCustomersDb({ makeDb }) {
         return result;
     }
 
-    async function getAppoitments({ doctorId, day, time }) {
+    async function getAppointments({ doctorId, day, time }) {
         const db = await makeDb();
         const result = await db.getAppoitments({ doctorId, day, time });
         return result;

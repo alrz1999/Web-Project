@@ -9,7 +9,8 @@ module.exports = function makeDoctorsDb({ makeDb }) {
         update,
         login,
         logout,
-        exists
+        exists,
+        getAppointments
     });
 
     async function findAll() {
@@ -69,6 +70,12 @@ module.exports = function makeDoctorsDb({ makeDb }) {
     async function exists({ email, phoneNumber, medicalNumber }) {
         const db = await makeDb();
         const result = await db.login({ email, phoneNumber, medicalNumber });
+        return result;
+    }
+
+    async function getAppointments({ doctorId, day, time }) {
+        const db = await makeDb();
+        const result = await db.getAppoitments({ doctorId, day, time });
         return result;
     }
 }   

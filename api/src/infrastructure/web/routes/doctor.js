@@ -12,8 +12,8 @@ const doctorsRouter = () => {
         .post(makeCallBack(controller.deleteDoctor));
     router.route('/login')
         .post(makeCallBack(controller.loginDoctor));
-        router.route('appointments/:doctorId')
-        .get(makeCallBack(controller.getDoctor))
+    router.route('/appointments')
+        .get(makeCallBack(controller.getAppointments))
         .post(makeCallBack(controller.postEditDoctor));
     router.route('/:doctorId')
         .get(makeCallBack(controller.getDoctor))

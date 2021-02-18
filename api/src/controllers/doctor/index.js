@@ -1,4 +1,4 @@
-const { removeDoctor, addDoctor, editDoctor, listDoctors, getDoctorById, doctorLogin } = require('../../application/use-cases/doctor');
+const { removeDoctor, addDoctor, editDoctor, listDoctors, getDoctorById, doctorLogin, getAllAppointments } = require('../../application/use-cases/doctor');
 const doctorSubControllersFactory = require('./doctor-services');
 
 
@@ -8,6 +8,9 @@ const postAddDoctor = doctorSubControllersFactory.makeAddDoctor({ addDoctor, doc
 const postEditDoctor = doctorSubControllersFactory.makeEditDoctor({ editDoctor });
 const getDoctor = doctorSubControllersFactory.makeGetDoctor({ getDoctorById });
 const loginDoctor = doctorSubControllersFactory.makeLoginDoctor({ doctorLogin });
+const getAppointments = doctorSubControllersFactory.makeGetAppointments({ getAllAppointments });
+const fillAppointments = doctorSubControllersFactory.makeLoginDoctor({ doctorLogin });
+
 
 const doctorControllers = {
     deleteDoctor,
@@ -16,11 +19,12 @@ const doctorControllers = {
     postEditDoctor,
     getDoctor,
     loginDoctor,
+    getAppointments
 };
 
 module.exports = {
     doctorControllers, deleteDoctor, getDoctors, postAddDoctor, postEditDoctor, getDoctor,
-    loginDoctor,
+    loginDoctor, getAppointments
 };
 
 

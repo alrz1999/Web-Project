@@ -9,5 +9,4 @@ class Appointment extends Parse.Object {
 
 Parse.Object.registerSubclass('Appointment', Appointment);
 
-
 module.exports = Appointment
