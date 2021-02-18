@@ -1,11 +1,9 @@
 
 const Parse = require('parse/node')
 
-class DoctorUser extends Parse.User {
+class Appointment {
     constructor(attributes) {
-        super(attributes);
     }
 }
-Parse.Object.registerSubclass('_User', DoctorUser);
 
-module.exports = DoctorUser
+module.exports = Appointment

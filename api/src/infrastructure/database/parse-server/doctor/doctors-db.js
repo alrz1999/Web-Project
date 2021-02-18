@@ -1,6 +1,7 @@
 const Parse = require('parse/node');
 const Doctor = require('../../../../entities/doctor/doctor');
-const DoctorUser = require('./doctor-dto')
+const DoctorUser = require('./doctor-dto');
+const AppointmentDTO = require('./appoitment-dto');
 
 module.exports = function makeDoctorsDb() {
     return Object.freeze({
@@ -61,7 +62,7 @@ module.exports = function makeDoctorsDb() {
     async function insert(doctor) {
         const user = new DoctorUser();
         let username = doctor.medicalNumber + '';
-        
+
         user.set("password", doctor.password);
         user.set("username", username)
         user.set("email", doctor.email);
@@ -136,7 +137,7 @@ module.exports = function makeDoctorsDb() {
 
     async function login({ ...loginInfo }) {
         const { medicalNumber, password } = loginInfo;
-        const user = await Parse.User.logIn(toString(medicalNumber), password);
+        const user = await Parse.User.logIn(medicalNumber + '', password);
         if (user.get('role') != 'doctor') {
             await user.logout();
             throw new Error("access denied.")
@@ -149,7 +150,12 @@ module.exports = function makeDoctorsDb() {
         return user;
     };
 
-    async function getAppoitments() {
+    async function getAppoitments({ doctorId, day, time }) {
+        const doctor = await findById(doctorId);
+        if (!doctor || doctor == null) {
+            throw new Error("There is no doctor with this id.");
+        }
+
         const query = new Parse.Query(DoctorUser);
         query.equalTo("role", "doctor");
         const resultDTO = await query.find();
