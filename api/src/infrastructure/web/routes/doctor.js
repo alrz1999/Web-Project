@@ -13,7 +13,7 @@ const doctorsRouter = () => {
     router.route('/login')
         .post(makeCallBack(controller.loginDoctor));
     router.route('/appointments')
-        .get(makeCallBack(controller.getAppointments));
+        .post(makeCallBack(controller.getAppointments));
     router.route('/:doctorId')
         .get(makeCallBack(controller.getDoctor))
         .post(makeCallBack(controller.postEditDoctor));
